@@ -17,12 +17,18 @@ import random
 
 numbers = '0123456789'
 
-with open('input.txt', 'r') as f:
-    items = f.read().split('\n')
+with open('in4.txt', 'r') as f:
+    items = f.read()
+
+if "?" not in items: # проверка на дурака :D
+    with open('output.txt', 'w') as filo:
+        print(items)
+        print(items, file=filo)
+        exit(0)
 
 answers = []
 
-for item in items:
+for item in items.split('\n'):
     #  здесь будут конечные массивы с числами, которые соответствуют возможным комбинациям A, B, C
     A_list = []
     B_list = []
@@ -65,7 +71,7 @@ for item in items:
     ans = []
     for a in A_list:
         for b in B_list:
-            max_len = max(len(a), len(b))  # берем максимальную длину одного из чисел, дабы нули не потерять
+            max_len = max(len(a), len(b), len(c))  # берем максимальную длину одного из чисел, дабы нули не потерять
             if (summ := str(int(a) + int(b))) in C_list:  # использузем моржа, чтобы не считать сумму снова и чтобы запихнуть в ответ
                 a = '0' * (max_len-len(a)) + a # приписываем столько нулей, сколько нам не хватает в числе
                 b = '0' * (max_len-len(b)) + b
@@ -95,6 +101,7 @@ for item in items:
 with open('output.txt', 'w') as filo:
     for it in answers:
         index = random.randint(0, len(it) - 1)
+        print(it[index])
         print(it[index], file=filo)
 
     '''
